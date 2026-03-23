@@ -214,6 +214,35 @@ body {
     background: var(--accent-color);
 }
 
+/* Bio Section */
+.bio-section {
+    max-width: 800px;
+    margin: 0 auto 3.5rem;
+    padding: 0 1rem;
+    text-align: center;
+    position: relative;
+}
+
+.bio-content p {
+    font-size: clamp(0.95rem, 2.2vw, 1.15rem);
+    line-height: 1.7;
+    color: var(--text-muted);
+    font-weight: 300;
+    letter-spacing: 0.01em;
+}
+
+@media (max-width: 768px) {
+    .bio-section {
+        margin: 0 auto 2.5rem;
+        padding: 0;
+    }
+
+    .bio-content p {
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+}
+
 /* Timeline Sections */
 .timeline-section {
     display: none;
