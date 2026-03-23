@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Luca Mastrostefano - CV</title>
+    <style>
+        :root {
+            --primary: #111;
+            --secondary: #444;
+            --accent: #2563eb;
+            --text-main: #222;
+            --text-muted: #666;
+            --border: #eaeaea;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: var(--text-main);
+            line-height: 1.4;
+            background: #fff;
+            font-size: 10pt;
+            margin: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* A4 aspect ratio & print optimization */
+        .cv-container {
+            max-width: 800px;
+            margin: 1rem auto;
+            padding: 1.2rem 2.5rem;
+            background: #fff;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border-radius: 4px;
+        }
+
+        @media print {
+            body {
+                background: #fff;
+                font-size: 9pt;
+            }
+
+            .cv-container {
+                margin: 0;
+                padding: 0;
+                box-shadow: none;
+                max-width: 100%;
+            }
+
+            @page {
+                size: A4;
+                margin: 0.8cm 1.2cm;
+            }
+
+            a {
+                text-decoration: none;
+                color: var(--primary);
+            }
+        }
+
+        header {
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 0.8rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .header-content h1 {
+            font-size: 24pt;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.1rem;
+            color: var(--primary);
+        }
+
+        .header-content .subtitle {
+            font-size: 12pt;
+            font-weight: 500;
+            color: var(--secondary);
+        }
+
+        .header-content p {
+            font-size: 8.5pt;
+            color: var(--text-muted);
+            line-height: 1.5;
+            font-weight: 500;
+        }
+
+        .contact-info {
+            text-align: right;
+            font-size: 8.5pt;
+            color: var(--text-muted);
+            line-height: 1.5;
+            font-weight: 500;
+        }
+
+        .contact-info a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .section {
+            margin-bottom: 0.8rem;
+        }
+
+        .section-title {
+            font-size: 11pt;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--primary);
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.2rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .summary {
+            font-size: 9.5pt;
+            color: var(--text-main);
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+
+        .item {
+            margin-bottom: 0.7rem;
+            page-break-inside: avoid;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 0.05rem;
+        }
+
+        .item-title {
+            font-weight: 700;
+            font-size: 10.5pt;
+            color: var(--primary);
+        }
+
+        .item-company {
+            font-weight: 600;
+            color: var(--secondary);
+            font-size: 9pt;
+        }
+
+        .item-meta {
+            font-size: 8.5pt;
+            color: var(--text-muted);
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .item-desc {
+            margin-top: 0.2rem;
+        }
+
+        .item-desc ul {
+            padding-left: 1.1rem;
+            margin-top: 0.2rem;
+        }
+
+        .item-desc p,
+        .item-desc li {
+            margin-bottom: 0.15rem;
+            color: var(--secondary);
+            font-size: 9pt;
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            list-style: none;
+            padding: 0;
+        }
+
+        .skills-list li {
+            background: #f4f4f5;
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            font-size: 8pt;
+            font-weight: 500;
+            color: var(--secondary);
+            border: 1px solid var(--border);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="cv-container">
+        <header>
+            <div class="header-content">
+                <h1>Luca Mastrostefano</h1>
+                <div class="subtitle">AI & Machine Learning Engineer / Tech Founder</div>
+                <p>London, UK 🇬🇧 </p>
+            </div>
+            <div class="contact-info">
+                <a href="mailto:luca.mastrostefano90@gmail.com">luca.mastrostefano90@gmail.com</a><br>
+                <a href="https://linkedin.com/in/lucamastrostefano/"
+                    target="_blank">linkedin.com/in/lucamastrostefano</a><br><a href="https://lucamastrostefano.com"
+                    target="_blank">lucamastrostefano.com</a>
+            </div>
+        </header>
+
+        <div class="summary">
+            Serial tech founder and AI technical leader with over a decade of experience building scalable AI platforms
+            and machine learning models. Built the automatic pre-qualification engine for InReach Ventures (€53M UK VC)
+            achieving 70% agreement with partners. Successfully built top-tier engineering teams; scaled products
+            from $0 to $3M ARR in under 12 months and secured millions in VC and EU grant funding. </div>
+
+        <div class="section">
+            <h2 class="section-title">Experience</h2>
+
+            <div class="item">
+                <div class="item-header">
+                    <span class="item-title">Polymarket Trader</span>
+                    <span class="item-meta">2026 - Present</span>
+                </div>
+                <div class="item-desc">
+                    <p><strong>Twice ranked in the Top 30 Crypto Daily Traders worldwide</strong> with a 25x
+                        return
+                        over 800 trades in
+                        48h.</p>
+                </div>
+            </div>
+
+            <div class="item">
+                <div class="item-header">
+                    <span class="item-title">Founder & CEO</span>
+                    <span class="item-meta">2022 - Present</span>
+                </div>
+                <div class="item-company">getCredible</div>
+                <div class="item-desc">
+                    <ul>
+                        <li>Raised $540K in VC backing to pioneer an AI-powered proprietary data layer for
+                            identifying top 10x talent.</li>
+                        <li>Led a cross-functional team combining AI with gamified peer referrals to
+                            create
+                            verified talent performance leaderboards.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="item">
+                <div class="item-header">
+                    <span class="item-title">Founder & CTO</span>
+                    <span class="item-meta">2020 - 2021</span>
+                </div>
+                <div class="item-company">Human Mobility</div>
+                <div class="item-desc">
+                    <ul>
+                        <li>Led a team of 20+ to build and scale a B2E product to
+                            <strong>$2.9M ARR within 12
+                                months</strong> (100K+ users, 9 countries).
+                        </li>
+                        <li>Built secure software/hardware solutions for social distancing, used in Italian
+                            Serie A and World Ski Championships.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="item">
+                <div class="item-header">
+                    <span class="item-title">Founder & CEO</span>
+                    <span class="item-meta">2020</span>
+                </div>
+                <div class="item-company">CovidApp</div>
+                <div class="item-desc">
+                    <ul>
+                        <li>Built and led a team of <strong>35 world-class researchers (MIT, USC, IBM)</strong>
+                            to launch the world's 1st graph-based contact
+                            tracing app; selected as backup to the Italian Govt's deployment out of 350+
+                            worldwide entries.</li>
+                        <li>Co-authored graph inference principles published in <em>ScienceDirect</em> with MIT
+                            and USC researchers.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="item">
+                <div class="item-header">
+                    <span class="item-title">Lead Machine Learning Engineer</span>
+                    <span class="item-meta">2018 - 2020</span>
+                </div>
+                <div class="item-company">InReach Ventures (London, UK)</div>
+                <div class="item-desc">
+                    <ul>
+                        <li><strong>Engineered an automatic startup pre-qualification system</strong> utilizing
+                            ML on ~100
+                            features per company for a €53M AI-powered Venture Capital fund.</li>
+                        <li>Achieved a <strong>70% agreement rate</strong> with partners, enabling significant
+                            scaling of sourcing operations.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="item">
+                <div class="item-header">
+                    <span class="item-title">ML Engineer & Product Owner</span>
+                    <span class="item-meta">2013 - 2018</span>
+                </div>
+                <div class="item-company">Translated.com / ModernMT (Rome, Italy)</div>
+                <div class="item-desc">
+                    <ul>
+                        <li>First PM and 3rd eng. at the AI-translation tech scaleup. Lead developer of
+                            MyMemory TM server (300M API calls/mo).</li>
+                        <li>Led the team and authored a <strong>winning proposal for a €3.5M</strong> European
+                            Commission grant
+                            to build ModernMT, advancing contextualized machine translation. The tech now
+                            translates all content for <strong>Airbnb globally</strong>.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Key Achievements</h2>
+            <div class="item-desc">
+                <ul style="margin-top: 0;">
+                    <li><strong>Lead-Gen Exit:</strong> Built and sold a lead-gen platform at age 25, scaling
+                        outreach from $200k to $2M/year.</li>
+                    <li><strong>Angel Investor:</strong> Early investor in <strong>Devo</strong> and
+                        <strong>Spotonway</strong> [Marketplace/SaaS].
+                    </li>
+                    <li><strong>Top 0.1% Performer:</strong> Verified top-tier talent on the getCredible
+                        platform (out of 30,000+ users).</li>
+                    <li><strong>Sport:</strong> Represented Italy at the U26 European Universities
+                        Championship at age 19; skied 62 miles in a day.</li>
+
+                    <li><strong>AI Game Bots:</strong> Built and sold automated AI bots for Travian.com at age
+                        15 to automate
+                        referral bonuses.</li>
+                    <li><strong>Coder since 12 yo:</strong> Losing sleep to build products from an early age.
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Education & Skills</h2>
+            <div class="item"
+                style="margin-bottom: 0.4rem; display: flex; justify-content: space-between; align-items: baseline;">
+                <div>
+                    <span class="item-title">MSc CS (Dropout, GPA 29/30) & BSc CS (110/110)</span>
+                    <span class="item-company"> — Sapienza & Roma Tre Universities</span>
+                </div>
+                <div class="item-meta">2009 - 2014</div>
+            </div>
+            <ul class="skills-list">
+                <li>AI & Machine Learning (NLP, Bayesian Inference)</li>
+                <li>Python, Graph Algorithms & Data Mining</li>
+                <li>Scalable Architectures & VC Sourcing Tech</li>
+                <li>Startup Fundraising & Scaling Strategy</li>
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>
