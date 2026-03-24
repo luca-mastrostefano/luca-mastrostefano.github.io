@@ -146,7 +146,8 @@
             <div class="timeline-section active" id="timeline-professional">
                 <section class="bio-section">
                     <div class="bio-content">
-                        <p>Serial tech founder and product-led engineer with 10+ years of experience building and scaling
+                        <p>Serial tech founder and product-led engineer with 10+ years of experience building and
+                            scaling
                             high-impact
                             products from 0 to 1. Led teams of 20+ engineers and scaled a B2E platform from $0 to $3M
                             ARR in
@@ -861,6 +862,26 @@
         </div>
     </footer>
 
+    <!-- Smartlook - Delayed initialization to preserve high performance -->
+    <script type='text/javascript'>
+        (function () {
+            function initSmartlook() {
+                window.smartlook || (function (d) {
+                    var o = smartlook = function () { o.api.push(arguments) }, h = d.getElementsByTagName('head')[0];
+                    var c = d.createElement('script'); o.api = new Array(); c.async = true; c.type = 'text/javascript';
+                    c.charset = 'utf-8'; c.src = 'https://web-sdk.smartlook.com/recorder.js'; h.appendChild(c);
+                })(document);
+                smartlook('init', 'd7102f55347f48e04646fee94209e31dc2e0169b', { region: 'eu' });
+            }
+
+            // Delay execution until the browser is idle or after a timeout
+            if (window.requestIdleCallback) {
+                requestIdleCallback(() => initSmartlook());
+            } else {
+                setTimeout(initSmartlook, 3000);
+            }
+        })();
+    </script>
 </body>
 
 </html>
