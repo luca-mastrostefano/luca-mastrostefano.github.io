@@ -399,7 +399,6 @@ body {
     border-radius: 16px;
     /*background: var(--card-bg);*/
     border: 1px solid transparent;
-    cursor: pointer;
     transition: var(--transition);
 }
 
@@ -409,6 +408,7 @@ body {
     align-items: center;
     gap: 1.5rem;
     min-height: 2.5rem;
+    cursor: pointer;
 }
 
 .header-content {
