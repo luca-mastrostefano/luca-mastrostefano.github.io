@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const navButtons = document.querySelectorAll('.nav-btn');
+    const navButtons = document.querySelectorAll('.nav-btn[data-timeline]');
     const timelineSections = document.querySelectorAll('.timeline-section');
     const timelineSteps = document.querySelectorAll('.timeline-step');
 
@@ -36,9 +36,13 @@ document.addEventListener('DOMContentLoaded', () => {
     timelineSteps.forEach(step => {
         step.addEventListener('click', (e) => {
             // Prevent toggling when clicking links or buttons inside the card
-            if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON') return;
+            if (e.target.closest('a, button')) return;
 
             const isExpanded = step.classList.contains('expanded');
+
+            // When expanded, only clicks on the summary (step-header) should collapse.
+            // Clicks inside step-details (content revealed by expansion) are ignored.
+            if (isExpanded && !e.target.closest('.step-header')) return;
 
             if (isExpanded) {
                 // CLOSING: Handle scroll anchoring to keep the next content in place
