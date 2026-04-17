@@ -55,7 +55,8 @@
                 <h1 class="hero-name">Luca Mastrostefano</h1>
                 <p class="hero-subtitle">Engineer & Founder • London, UK 🇬🇧</p>
                 <p class="hero-tagline">I launched and scaled companies and products, that raised and made millions.
-                    <br>Non-stop builder, constantly reducing entropy.
+                    <br>Non-stop builder, constantly <a href="#" class="info-trigger" data-info="entropy"
+                        aria-label="What does reducing entropy mean?">reducing entropy</a>.
                 </p>
             </div>
         </div>
@@ -146,7 +147,7 @@
             <div class="timeline-section active" id="timeline-professional">
                 <section class="bio-section">
                     <div class="bio-content">
-                        <p>Serial tech founder and product-led engineer with 10+ years of experience building and
+                        <p>Serial tech founder and product-led engineer with 15 years of experience building and
                             scaling
                             high-impact
                             products from 0 to 1. Led teams of 20+ engineers and scaled a B2E platform from $0 to $3M
@@ -172,9 +173,13 @@
                             <div class="expand-indicator"></div>
                         </div>
                         <div class="step-details">
-                            <p>A crypto predictive engine leveraging real-time cross-asset prediction divergence and
-                                historical Bayesian states to capture high-conviction trading opportunities.
-                            </p>
+                            <p>Value trading using custom ML models and real-time infrastructure:</p>
+                            <ul class="summary-list">
+                                <li>Ranked #2 daily trader in the "Culture" vertical, using a model combining Bayesian
+                                    methods, HMMs, and Monte Carlo simulations.</li>
+                                <li>Twice ranked among the Top 30 global crypto daily traders, achieving a 25&times;
+                                    return over 800 trades in 48 hours.</li>
+                            </ul>
                             <div style="margin-top: 1.5rem; display: flex; flex-direction: column; align-items: center; gap: 0.6rem;">
                                 <img src="assets/images/polymarket_2nd.png" alt="Ranked 2nd best trader in category on Polymarket"
                                     style="max-width: 160px; width: 100%; height: auto; border-radius: 8px;">
@@ -875,6 +880,43 @@
         <button class="yt-overlay-close" aria-label="Close video">&times;</button>
         <div class="yt-overlay-frame"></div>
     </div>
+
+    <!-- Info Modal (generic text modal populated from <template> content) -->
+    <div id="info-modal" class="info-modal" role="dialog" aria-modal="true" aria-labelledby="info-modal-title" hidden>
+        <div class="info-modal-dialog">
+            <button class="info-modal-close" aria-label="Close">&times;</button>
+            <div class="info-modal-body"></div>
+        </div>
+    </div>
+
+    <template id="info-entropy">
+        <h3 id="info-modal-title">"Reducing Entropy" — Ray Kurzweil's View</h3>
+        <p>Ray Kurzweil's perspective on entropy reduction is a central tenet of his techno-optimist philosophy. While
+            the universe is governed by the second law of thermodynamics (increasing entropy / disorder), evolution and
+            technology create "local pockets" of increasingly higher order, complexity, and intelligence. He views this
+            as the ultimate goal of the Technological Singularity, where human–machine civilization will reorganize
+            matter and energy into "computronium" to manage and reduce disorder.</p>
+        <h4>Key aspects</h4>
+        <ul>
+            <li><strong>Local vs. global entropy:</strong> overall entropy in the universe increases, but in specific
+                subsystems evolution leads to greater complexity, elegance, and intelligence.</li>
+            <li><strong>The Law of Accelerating Returns:</strong> as order (information / technology) increases, the
+                time between major evolutionary advancements decreases — the rate of entropy reduction accelerates over
+                time.</li>
+            <li><strong>Reorganization of matter:</strong> as we approach the Singularity (expected around 2045), we
+                will begin to reorganize random matter and energy into intelligent, structured forms such as nanobots
+                and hyper-intelligent computers.</li>
+            <li><strong>The role of AI:</strong> the Singularity is the point where AI takes over this
+                self-improvement, allowing it to reverse disorder on an exponential scale — solving complex problems
+                like aging and environmental damage.</li>
+            <li><strong>Ultimate destiny:</strong> humanity's purpose is to spread this organized intelligence
+                throughout the universe, fighting the long-term heat death and creating a new, highly ordered existence.
+            </li>
+        </ul>
+        <p>Kurzweil's view: humanity is moving toward a future where advances in AGI and nanotechnology allow for the
+            active reduction of entropy — effectively reversing disorder and increasing the capacity for knowledge,
+            creativity, and complexity.</p>
+    </template>
 
     <!-- Smartlook - Delayed initialization to preserve high performance -->
     <script type='text/javascript'>

@@ -1047,6 +1047,181 @@ body {
     width: 100%;
     height: 100%;
     border: 0;
+    z-index: 3;
+}
+
+.yt-overlay-thumb {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+    transition: opacity 0.3s ease;
+}
+
+.yt-overlay-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 56px;
+    height: 56px;
+    margin: -28px 0 0 -28px;
+    border: 4px solid rgba(255, 255, 255, 0.25);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: yt-spin 0.9s linear infinite;
+    z-index: 2;
+    transition: opacity 0.3s ease;
+}
+
+.yt-overlay-frame.is-loaded .yt-overlay-thumb,
+.yt-overlay-frame.is-loaded .yt-overlay-spinner {
+    opacity: 0;
+    pointer-events: none;
+}
+
+@keyframes yt-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Muted inline info link (e.g. "reducing entropy" in the hero tagline) */
+.info-trigger {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px dotted currentColor;
+    cursor: help;
+    transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.info-trigger:hover,
+.info-trigger:focus-visible {
+    color: var(--accent-color);
+    border-bottom-color: var(--accent-color);
+    outline: none;
+}
+
+/* Generic info modal */
+.info-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.65);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.info-modal[hidden] {
+    display: none;
+}
+
+.info-modal.is-open {
+    opacity: 1;
+}
+
+.info-modal-dialog {
+    position: relative;
+    width: 100%;
+    max-width: 640px;
+    max-height: calc(100vh - 3rem);
+    background: var(--bg-color);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 2rem 2rem 1.75rem;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    transform: translateY(10px);
+    transition: transform 0.25s ease;
+}
+
+.info-modal.is-open .info-modal-dialog {
+    transform: translateY(0);
+}
+
+.info-modal-close {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 1.6rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+.info-modal-close:hover {
+    background: var(--card-hover-bg);
+    color: var(--text-main);
+}
+
+.info-modal-body h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0 0 1rem;
+    padding-right: 2rem;
+    color: var(--text-main);
+}
+
+.info-modal-body h4 {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+    margin: 1.5rem 0 0.75rem;
+}
+
+.info-modal-body p {
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: var(--text-main);
+    margin: 0 0 1rem;
+}
+
+.info-modal-body ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem;
+}
+
+.info-modal-body li {
+    position: relative;
+    padding-left: 1.1rem;
+    margin-bottom: 0.65rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-main);
+}
+
+.info-modal-body li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.7em;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent-color);
+}
+
+.info-modal-body strong {
+    color: var(--text-main);
+    font-weight: 600;
 }
 
 .yt-overlay-close {

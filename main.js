@@ -225,11 +225,22 @@ document.addEventListener('DOMContentLoaded', () => {
             const isLocalFile = window.location.protocol === 'file:';
             const origin = isLocalFile ? '' : `&origin=${window.location.origin}`;
             const startParam = start ? `&start=${encodeURIComponent(start)}` : '';
-            frame.innerHTML = `<iframe
-                src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0${startParam}${origin}"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                title="YouTube video player"
-                allowfullscreen></iframe>`;
+
+            // Show the YouTube thumbnail and a spinner immediately; the iframe
+            // stacks on top and fades them out once the player is ready.
+            frame.innerHTML = `
+                <img class="yt-overlay-thumb" src="https://i.ytimg.com/vi/${videoId}/hqdefault.jpg" alt="">
+                <div class="yt-overlay-spinner" aria-hidden="true"></div>
+            `;
+
+            const iframe = document.createElement('iframe');
+            iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&playsinline=1${startParam}${origin}`;
+            iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+            iframe.title = 'YouTube video player';
+            iframe.allowFullscreen = true;
+            iframe.addEventListener('load', () => frame.classList.add('is-loaded'));
+            frame.appendChild(iframe);
+
             ytOverlay.hidden = false;
             // Force reflow so the transition runs from opacity 0.
             void ytOverlay.offsetWidth;
@@ -243,6 +254,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Unload iframe to stop playback and free resources.
             setTimeout(() => {
                 frame.innerHTML = '';
+                frame.classList.remove('is-loaded');
                 ytOverlay.hidden = true;
             }, 200);
         };
@@ -265,6 +277,51 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && !ytOverlay.hidden) closeOverlay();
+        });
+    }
+
+    // Info Modal (populated from <template id="info-<key>"> content)
+    const infoModal = document.getElementById('info-modal');
+    if (infoModal) {
+        const infoBody = infoModal.querySelector('.info-modal-body');
+        const infoClose = infoModal.querySelector('.info-modal-close');
+
+        const openInfo = (key) => {
+            const tpl = document.getElementById(`info-${key}`);
+            if (!tpl) return;
+            infoBody.innerHTML = '';
+            infoBody.appendChild(tpl.content.cloneNode(true));
+            infoModal.hidden = false;
+            void infoModal.offsetWidth;
+            infoModal.classList.add('is-open');
+            document.body.style.overflow = 'hidden';
+            infoClose.focus();
+        };
+
+        const closeInfo = () => {
+            infoModal.classList.remove('is-open');
+            document.body.style.overflow = '';
+            setTimeout(() => {
+                infoBody.innerHTML = '';
+                infoModal.hidden = true;
+            }, 200);
+        };
+
+        document.querySelectorAll('.info-trigger').forEach(trigger => {
+            trigger.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                const key = trigger.getAttribute('data-info');
+                if (key) openInfo(key);
+            });
+        });
+
+        infoClose.addEventListener('click', closeInfo);
+        infoModal.addEventListener('click', (e) => {
+            if (e.target === infoModal) closeInfo();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !infoModal.hidden) closeInfo();
         });
     }
 
