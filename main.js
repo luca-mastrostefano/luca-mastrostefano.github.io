@@ -180,17 +180,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const videoCards = document.querySelectorAll('.video-card');
     videoCards.forEach(card => {
         card.addEventListener('click', (e) => {
-            e.stopPropagation(); // Prevent card expansion toggle 
+            e.stopPropagation(); // Prevent card expansion toggle
             const videoId = card.getAttribute('data-video');
             if (videoId) {
-                // Handling for file:// protocol which blocks origin parameters 
+                // Handling for file:// protocol which blocks origin parameters
                 const isLocalFile = window.location.protocol === 'file:';
                 const origin = isLocalFile ? '' : `&origin=${window.location.origin}`;
 
-                card.innerHTML = `<iframe 
-                    src="https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&enablejsapi=1&rel=0${origin}" 
-                    frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                card.innerHTML = `<iframe
+                    src="https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&enablejsapi=1&rel=0${origin}"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     style="width: 100%; height: 100%; border-radius: 12px; background: black; display: block;"
                     title="Reproducible Simulation Video"
                     allowfullscreen></iframe>`;
@@ -199,6 +199,74 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    // YouTube Overlay Player (inline text triggers like the "Josha" WarGames reference)
+    const ytOverlay = document.getElementById('yt-overlay');
+    if (ytOverlay) {
+        const frame = ytOverlay.querySelector('.yt-overlay-frame');
+        const closeBtn = ytOverlay.querySelector('.yt-overlay-close');
+        let preconnected = false;
+
+        // Warm up YouTube connections on first hover/focus so click-to-play feels instant
+        // without paying the cost on initial page load.
+        const preconnect = () => {
+            if (preconnected) return;
+            preconnected = true;
+            ['https://www.youtube.com', 'https://i.ytimg.com', 'https://s.ytimg.com'].forEach(href => {
+                const link = document.createElement('link');
+                link.rel = 'preconnect';
+                link.href = href;
+                link.crossOrigin = '';
+                document.head.appendChild(link);
+            });
+        };
+
+        const openOverlay = (videoId, start) => {
+            const isLocalFile = window.location.protocol === 'file:';
+            const origin = isLocalFile ? '' : `&origin=${window.location.origin}`;
+            const startParam = start ? `&start=${encodeURIComponent(start)}` : '';
+            frame.innerHTML = `<iframe
+                src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0${startParam}${origin}"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                title="YouTube video player"
+                allowfullscreen></iframe>`;
+            ytOverlay.hidden = false;
+            // Force reflow so the transition runs from opacity 0.
+            void ytOverlay.offsetWidth;
+            ytOverlay.classList.add('is-open');
+            document.body.style.overflow = 'hidden';
+        };
+
+        const closeOverlay = () => {
+            ytOverlay.classList.remove('is-open');
+            document.body.style.overflow = '';
+            // Unload iframe to stop playback and free resources.
+            setTimeout(() => {
+                frame.innerHTML = '';
+                ytOverlay.hidden = true;
+            }, 200);
+        };
+
+        document.querySelectorAll('.youtube-trigger').forEach(trigger => {
+            trigger.addEventListener('mouseenter', preconnect, { once: true });
+            trigger.addEventListener('focus', preconnect, { once: true });
+            trigger.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                const videoId = trigger.getAttribute('data-video');
+                const start = trigger.getAttribute('data-start');
+                if (videoId) openOverlay(videoId, start);
+            });
+        });
+
+        closeBtn.addEventListener('click', closeOverlay);
+        ytOverlay.addEventListener('click', (e) => {
+            if (e.target === ytOverlay) closeOverlay();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !ytOverlay.hidden) closeOverlay();
+        });
+    }
 
     // Theme Toggling
     const themeToggle = document.getElementById('theme-toggle');
