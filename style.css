@@ -1224,6 +1224,49 @@ body {
     font-weight: 600;
 }
 
+.info-accordion {
+    margin: 1rem 0;
+}
+
+.info-accordion > summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    list-style: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--accent-color);
+    padding: 0.25rem 0;
+    user-select: none;
+    transition: opacity 0.2s ease;
+}
+
+.info-accordion > summary::-webkit-details-marker {
+    display: none;
+}
+
+.info-accordion > summary::after {
+    content: "›";
+    display: inline-block;
+    font-size: 1.1rem;
+    line-height: 1;
+    transition: transform 0.2s ease;
+    transform: rotate(90deg);
+}
+
+.info-accordion[open] > summary::after {
+    transform: rotate(-90deg);
+}
+
+.info-accordion > summary:hover {
+    opacity: 0.8;
+}
+
+.info-accordion > ul {
+    margin-top: 0.75rem;
+}
+
 .yt-overlay-close {
     position: absolute;
     top: 1rem;
