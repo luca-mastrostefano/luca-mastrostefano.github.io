@@ -1289,3 +1289,15 @@ body {
 .yt-overlay-close:hover {
     background: rgba(255, 255, 255, 0.3);
 }
+
+.uni-logo {
+    height: 60px;
+    width: auto;
+    object-fit: contain;
+}
+
+@media (max-width: 768px) {
+    .uni-logo {
+        height: 36px;
+    }
+}

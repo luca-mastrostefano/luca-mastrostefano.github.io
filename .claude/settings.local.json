@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 *)",
+      "Bash(kill %1)",
+      "Bash(pkill -f \"http.server 8765\")",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(ls *)",
+      "Bash(git commit *)"
+    ]
+  }
+}

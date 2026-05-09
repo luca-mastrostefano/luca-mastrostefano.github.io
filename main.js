@@ -105,14 +105,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // Horizontal Scroll with Mouse Drag (for desktop)
     const carousels = document.querySelectorAll('.media-carousel');
     carousels.forEach(carousel => {
-        // Triple the items so we can loop seamlessly in both directions:
-        // user always views the middle copy; we wrap when entering the outer copies.
+        // Multiply the items so we can loop seamlessly in both directions:
+        // We use 5 copies to ensure scrollWidth is large enough even on ultra-wide screens,
+        // preventing the browser's maxScrollLeft from clamping the infinite wrap logic.
+        const numCopies = 5;
         const originalChildCount = carousel.children.length;
         const originalContent = carousel.innerHTML;
-        carousel.innerHTML += originalContent + originalContent;
+        carousel.innerHTML = originalContent.repeat(numCopies);
 
         // copyWidth = offsetLeft of the first item of copy 2 (= one full copy + one gap).
-        let copyWidth = carousel.scrollWidth / 3;
+        let copyWidth = carousel.scrollWidth / numCopies;
         const recalcCopyWidth = () => {
             const firstOfCopy2 = carousel.children[originalChildCount];
             if (firstOfCopy2 && firstOfCopy2.offsetLeft > 0) {
@@ -133,14 +135,23 @@ document.addEventListener('DOMContentLoaded', () => {
         // Keeps scrollLeft inside [copyWidth, 2*copyWidth). Returns the delta applied
         // so that drag offsets can be re-synced.
         const wrap = () => {
+            if (copyWidth <= 0) return 0;
             let delta = 0;
-            while (carousel.scrollLeft >= 2 * copyWidth) {
+            let attempts = 0;
+            
+            while (carousel.scrollLeft >= 2 * copyWidth && attempts++ < 10) {
+                const prev = carousel.scrollLeft;
                 carousel.scrollLeft -= copyWidth;
                 delta -= copyWidth;
+                if (carousel.scrollLeft === prev) break;
             }
-            while (carousel.scrollLeft < copyWidth) {
+            
+            attempts = 0;
+            while (carousel.scrollLeft < copyWidth && attempts++ < 10) {
+                const prev = carousel.scrollLeft;
                 carousel.scrollLeft += copyWidth;
                 delta += copyWidth;
+                if (carousel.scrollLeft === prev) break;
             }
             return delta;
         };
@@ -481,10 +492,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Lazy-play carousel video after page load to save initial bandwidth and maximize LCP
     window.addEventListener('load', () => {
-        const carouselVideo = document.getElementById('hero-carousel-video');
-        if (carouselVideo) {
-            carouselVideo.play().catch(e => console.log('Autoplay prevented by browser data-saver policies', e));
-        }
+        const carouselVideos = document.querySelectorAll('.media-carousel video');
+        carouselVideos.forEach(video => {
+            video.play().catch(e => console.log('Autoplay prevented by browser data-saver policies', e));
+        });
     });
 });
 
