@@ -105,9 +105,45 @@ document.addEventListener('DOMContentLoaded', () => {
     // Horizontal Scroll with Mouse Drag (for desktop)
     const carousels = document.querySelectorAll('.media-carousel');
     carousels.forEach(carousel => {
-        // Double the items for a seamless loop
+        // Triple the items so we can loop seamlessly in both directions:
+        // user always views the middle copy; we wrap when entering the outer copies.
+        const originalChildCount = carousel.children.length;
         const originalContent = carousel.innerHTML;
-        carousel.innerHTML += originalContent;
+        carousel.innerHTML += originalContent + originalContent;
+
+        // copyWidth = offsetLeft of the first item of copy 2 (= one full copy + one gap).
+        let copyWidth = carousel.scrollWidth / 3;
+        const recalcCopyWidth = () => {
+            const firstOfCopy2 = carousel.children[originalChildCount];
+            if (firstOfCopy2 && firstOfCopy2.offsetLeft > 0) {
+                const previous = copyWidth;
+                copyWidth = firstOfCopy2.offsetLeft;
+                // Keep the user anchored in the middle copy after a layout change
+                carousel.scrollLeft += (copyWidth - previous);
+            }
+        };
+        recalcCopyWidth();
+        // Start in the middle copy so the user can immediately scroll either way
+        carousel.scrollLeft = copyWidth;
+        window.addEventListener('resize', recalcCopyWidth);
+        carousel.querySelectorAll('img').forEach(img => {
+            if (!img.complete) img.addEventListener('load', recalcCopyWidth, { once: true });
+        });
+
+        // Keeps scrollLeft inside [copyWidth, 2*copyWidth). Returns the delta applied
+        // so that drag offsets can be re-synced.
+        const wrap = () => {
+            let delta = 0;
+            while (carousel.scrollLeft >= 2 * copyWidth) {
+                carousel.scrollLeft -= copyWidth;
+                delta -= copyWidth;
+            }
+            while (carousel.scrollLeft < copyWidth) {
+                carousel.scrollLeft += copyWidth;
+                delta += copyWidth;
+            }
+            return delta;
+        };
 
         let isDown = false;
         let startX;
@@ -128,11 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (!isDown && currentSpeed > 0) {
                 carousel.scrollLeft += currentSpeed;
-
-                // Seamless reset when we reach the end of the first set of items
-                if (carousel.scrollLeft >= (carousel.scrollWidth / 2)) {
-                    carousel.scrollLeft = 0;
-                }
+                wrap();
             }
             requestAnimationFrame(step);
         };
@@ -173,6 +205,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const x = e.pageX - carousel.offsetLeft;
             const walk = (x - startX) * 2; // scroll speed multiplier
             carousel.scrollLeft = scrollLeft - walk;
+            // Keep drag reference in sync if we wrapped during this frame
+            scrollLeft += wrap();
         });
     });
 
