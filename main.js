@@ -173,12 +173,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 currentSpeed = Math.max(targetSpeed, currentSpeed - transitionFactor);
             }
 
-            if (!isDown && currentSpeed > 0) {
-                carousel.scrollLeft += currentSpeed;
+            if (!isDown) {
+                if (currentSpeed > 0) {
+                    carousel.scrollLeft += currentSpeed;
+                }
+                // Always check wrap to catch manual trackpad/touch scrolling
+                // even when auto-scroll speed is 0 (like during hover)
                 wrap();
             }
             requestAnimationFrame(step);
         };
+
+        // Also catch manual scrolls immediately
+        carousel.addEventListener('scroll', () => {
+            if (!isDown) wrap();
+        });
 
         // Start auto-scroll
         requestAnimationFrame(step);
